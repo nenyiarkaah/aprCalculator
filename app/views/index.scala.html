@@ -1,0 +1,65 @@
+@*
+ * This template takes a single argument, a String containing a
+ * message to display.
+ *@
+@import helper._
+@(calcInterest: Option[Double], descrip: String, calcForm: Form[calcData])(implicit messages: Messages)
+
+@*
+ * Call the `main` template with two arguments. The first
+ * argument is a `String` with the title of the page, the second
+ * argument is an `Html` object containing the body of the page.
+ *@
+
+@main("Index"){
+
+    <!-- Calculate Interest -->
+    <div id="interest" class="content-section-a" style="border-top: 0">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 col-md-offset-3 col-lg-offset-4 text-center wrap_title">
+                    <h2>Lifetime APR</h2>
+                    <p class="lead">Work out how much interest you pay.</p>
+                </div>
+                <form role="form" action="/process" method="get" id="InterestForm" name="InterestForm" onsubmit="return FormValidation();">
+                    <div class="col-md-6 col-md-offset-3 col-lg-offset-4">
+                        <div class="form-group">
+                            <label for="inputAmount">Amount</label>
+                            <div id="amountClass" class="form-group has-success has-feedback">
+                                <input type="" class="form-control" name="inputAmount" id="inputAmount"
+                                placeholder="Enter amount, this can be to 2 decimal number." onkeyup="testInputData('inputAmount',decimalOnly)"
+                                oninput="setCustomValidity('')" required>
+                                <span id="amountSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputInterest">Interest</label>
+                            <div id="interestClass" class="form-group has-success has-feedback">
+                                <input type="" class="form-control" name="inputInterest" id="inputInterest"
+                                placeholder="Enter interest, this can be to 2 decimal number." onkeyup="testInputData('inputInterest',decimalOnly)"
+                                oninput="setCustomValidity('')" required>
+                                <span id="interestSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" value="Submit" class="btn tada btn-embossed btn-primary pull-right">
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="col-md-6 col-md-offset-3 col-lg-offset-4 text-left">
+                        <p>@descrip</p>
+                        <h3 id="calculatedInterest">@calcInterest</h3>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div> <!--End of Calculate Interest-->
+
+
+}
+

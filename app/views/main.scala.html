@@ -1,0 +1,29 @@
+@*
+ * This template is called from the `index` template. This template
+ * handles the rendering of the page header and body tags. It takes
+ * two arguments, a `String` for the title of the page and an `Html`
+ * object to insert into the body of the page.
+ *@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @* Here's where we render the page title `String`. *@
+        <title>@title</title>
+
+            <!-- JavaScript -->
+        <script src="@routes.Assets.versioned("/assets/js/jquery.min.js")"></script>
+        <script src="@routes.Assets.versioned("/assets/js/inputvalidation.js")"></script>
+
+    </head>
+    <body id="home">
+        @* And here's where we render the `Html` object containing
+         * the page content. *@
+        @content
+
+    </body>
+    <footer>
+        <p>© <a href="https://uk.linkedin.com/in/nenyi-arkaah-75800541" style="text-decoration: none;">Nenyi Arkaah</a>. All rights reserved. Design by TEMPLATED. </p>
+    </footer>
+</html>
