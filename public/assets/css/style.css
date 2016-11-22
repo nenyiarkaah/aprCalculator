@@ -1,0 +1,204 @@
+html {
+	height: 100%;
+}
+
+/*body {
+	height: 100%;
+	width: 100%;
+	overflow-x:hidden;
+}*/
+
+body {
+	height: 100%;
+	width: 100%;
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.72222;
+  color: #34495e;
+  background-color: #ffffff;
+  overflow-x:hidden;
+}
+
+#home {
+    height: 100%;
+    width: 100%;
+}
+
+#home-index {
+    height: 100%;
+    width: 100%;
+}
+
+a {
+  color: #34495e;
+  text-decoration: none;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+a:hover,
+a:focus {
+  color: #34495e;
+  text-decoration: none;
+}
+a:focus {
+  outline: none;
+}
+
+active .navbar-unread,
+.active .navbar-new {
+  background-color: #ffffff;
+  display: none;
+}
+.navbar-new {
+  background-color: #e74c3c;
+  font-size: 12px;
+  height: 18px;
+  line-height: 17px;
+  margin: -6px -10px;
+  min-width: 18px;
+  padding: 0 1px;
+  width: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.navbar-brand {
+	font-family: arvo;
+	letter-spacing: 3px;
+	font-weight: 400 !important;
+}
+
+.navbar-default {
+  background-color: #ecf0f1;
+}
+.navbar-default .navbar-brand {
+  color: #34495e;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #1abc9c;
+  background-color: transparent;
+}
+.navbar-default .navbar-toggle:before {
+  color: #34495e;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: transparent;
+}
+.navbar-default .navbar-toggle:hover:before,
+.navbar-default .navbar-toggle:focus:before {
+  color: #1abc9c;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #e5e9ea;
+  border-width: 2px;
+}
+.navbar-default .navbar-nav > li > a {
+  font-size: 16px;
+  line-height: 23px;
+  font-weight: 700;
+  color: #34495e;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #1abc9c;
+  background-color: transparent;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #1abc9c;
+  background-color: transparent;
+}
+.navbar-default .navbar-nav > .disabled > a,
+.navbar-default .navbar-nav > .disabled > a:hover,
+.navbar-default .navbar-nav > .disabled > a:focus {
+  color: #cccccc;
+  background-color: transparent;
+}
+.navbar-default .navbar-nav > .dropdown > a .caret {
+  border-top-color: #34495e;
+  border-bottom-color: #34495e;
+}
+.navbar-default .navbar-nav > .active > a .caret {
+  border-top-color: #1abc9c;
+  border-bottom-color: #1abc9c;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+  border-top-color: #1abc9c;
+  border-bottom-color: #1abc9c;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background-color: transparent;
+  color: #1abc9c;
+}
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav > .open > a:focus .caret {
+  border-top-color: #1abc9c;
+  border-bottom-color: #1abc9c;
+}
+
+.intro-header {
+	height: 100%;  /*Full Page*/ 
+    /*width: 100%;*/
+	padding-top: 50px;  /*If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content!*/ 
+	padding-bottom: 50px;
+	color: #f8f8f8;
+	background: url(../images/intro.jpg) no-repeat center center;
+	background-size: cover;
+	text-align: center;
+	overflow-x:hidden;
+}	
+
+.h1_home{
+	font-size: 80px;
+	font-family: arvo;
+	font-weight: 300;
+	letter-spacing: 6px;
+}
+
+.abcen{
+	position: relative;
+	top: 50%;
+	}
+
+.abcen1{
+	/*position: absolute;*/
+	top: 20%;
+	}
+
+.button_down img {
+width: 50px;
+}
+
+.content-section-a {
+	height: 100%;
+	background-color: #f8f8f8;
+	padding: 90px 0; 
+}
+
+.content-section-b {
+	height: 100%;
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+	padding: 90px 0; 
+}
+
+.content-section-b-inner {
+	display: inline-block;
+    margin: auto;
+}
+
+.affix {
+      top: 0;
+      width: 100%;
+  }
+
+  .affix + .container-fluid {
+      padding-top: 70px;
+  }

@@ -13,52 +13,109 @@
 
 @main("Index"){
 
-    <!-- Calculate Interest -->
-    <div id="interest" class="content-section-a" style="border-top: 0">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-6 col-md-offset-3 col-lg-offset-4 text-center wrap_title">
-                    <h2>Lifetime APR</h2>
-                    <p class="lead">Work out how much interest you pay.</p>
-                </div>
-                <form role="form" action="/process" method="get" id="InterestForm" name="InterestForm" onsubmit="return FormValidation();">
-                    <div class="col-md-6 col-md-offset-3 col-lg-offset-4">
-                        <div class="form-group">
-                            <label for="inputAmount">Amount</label>
-                            <div id="amountClass" class="form-group has-success has-feedback">
-                                <input type="" class="form-control" name="inputAmount" id="inputAmount"
-                                placeholder="Enter amount, this can be to 2 decimal number." onkeyup="testInputData('inputAmount',decimalOnly)"
-                                oninput="setCustomValidity('')" required>
-                                <span id="amountSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputInterest">Interest</label>
-                            <div id="interestClass" class="form-group has-success has-feedback">
-                                <input type="" class="form-control" name="inputInterest" id="inputInterest"
-                                placeholder="Enter interest, this can be to 2 decimal number." onkeyup="testInputData('inputInterest',decimalOnly)"
-                                oninput="setCustomValidity('')" required>
-                                <span id="interestSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <input type="submit" name="submit" id="submit" value="Submit" class="btn tada btn-embossed btn-primary pull-right">
-                        </div>
-
-                    </div>
-                    <br>
-                    <div class="col-md-6 col-md-offset-3 col-lg-offset-4 text-left">
-                        <p>@descrip</p>
-                        <h3 id="calculatedInterest">@calcInterest</h3>
-                    </div>
-
-                </form>
+    <!-- FullScreen -->
+    <div id="home-index" class="intro-header container-fluid">
+        <div class="col-xs-12 text-center abcen1">
+            <h2 class="h1_home">World Of APR</h2>
+            <h3>How much interest do you pay.</h3>
+        </div>
+            <!-- /.container -->
+        <div class="col-xs-12 text-center abcen">
+            <div class="button_down ">
+                <a class="imgcircle" href="#navbar-main"> <img class="img_scroll" src="@routes.Assets.versioned("/assets/icons/circle.png")" alt="circle"> </a>
             </div>
         </div>
-    </div> <!--End of Calculate Interest-->
+    </div>
+
+
+        <!-- NavBar-->
+    <nav id="navbar-main" class="navbar navbar-default" role="navigation" data-spy="affix" data-offset-top="197">
+        <div id="navbar" class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#home">Home</a>
+            </div>
+
+            <div class="container collapse navbar-collapse navbar-right navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="menuItem"><a href="#calc">Calculator</a></li>
+                    <li class="menuItem"><a href="#plan">Payment Plan</a></li>
+                    <li class="menuItem"><a href="#about">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+        <!-- Interest Calculator -->
+    <div id="calc" class="content-section-b content" style="border-top: 0">
+        <div class="container content-section-b-inner">
+            <form role="form" action="/process" method="get" id="InterestForm" name="InterestForm" onsubmit="return FormValidation();">
+                <div class="col-md-6 col-md-offset-3 col-lg-offset-4">
+                    <div class="form-group">
+                        <label for="inputAmount">Amount</label>
+                        <div id="amountClass" class="form-group has-success has-feedback">
+                            <input type="" class="form-control" name="inputAmount" id="inputAmount"
+                            placeholder="Enter amount, this can be to 2 decimal number." onkeyup="testInputData('inputAmount',decimalOnly)"
+                            oninput="setCustomValidity('')" required>
+                            <span id="amountSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputInterest">Interest</label>
+                        <div id="interestClass" class="form-group has-success has-feedback">
+                            <input type="" class="form-control" name="inputInterest" id="inputInterest"
+                            placeholder="Enter interest, this can be to 2 decimal number." onkeyup="testInputData('inputInterest',decimalOnly)"
+                            oninput="setCustomValidity('')" required>
+                            <span id="interestSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" name="submit" id="submit" value="Submit" class="btn tada btn-embossed btn-primary pull-right">
+                    </div>
+
+                </div>
+                <br>
+                <div class="col-md-6 col-md-offset-3 col-lg-offset-4 text-left">
+                    <p>@descrip</p>
+                    <h3 id="calculatedInterest">@calcInterest</h3>
+                </div>
+
+            </form>
+        </div>
+    </div>
+        <!-- /Interest Calculator -->
+
+        <!-- Payment plan-->
+    <div id="plan" class="content-section-a content" style="border-top: 0">
+        <div class="container content-section-b-inner">
+            <form role="form" action="/processplan" method="get" id="PaymentForm" name="PaymentForm" onsubmit="return FormValidation();">
+
+            </form>
+        </div>
+    </div>
+        <!-- / Payment plan-->
+        <!-- What is -->
+    <div id="about" class="content-section-b" style="border-top: 0">
+        <div class="container">
+
+            <div class="col-md-6 col-md-offset-3 text-center wrap_title">
+                <h2>About</h2>
+                <p class="lead" style="margin-top:0">This is a quick site to show the wonders of Scala and the Play Framework.</p>
+            </div>
+        </div>
+    </div>
+        <!--
+    <footer id="footer" class="footer">
+        <p class="text-center"><br>This is my big footer, only test. :)</p>
+    </footer>-->
+
 
 
 }

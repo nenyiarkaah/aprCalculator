@@ -12,9 +12,20 @@
         @* Here's where we render the page title `String`. *@
         <title>@title</title>
 
+
+            <!--Boostrap-->
+        <link href="@routes.Assets.versioned("assets/bootstrap/css/bootstrap.min.css")" rel='stylesheet'>
+        <link href="@routes.Assets.versioned("assets/css/style.css")" rel='stylesheet'>
+
+            <!-- Custom Google Web Font -->
+        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+
             <!-- JavaScript -->
-        <script src="@routes.Assets.versioned("/assets/js/jquery.min.js")"></script>
+        <script src="@routes.Assets.versioned("/assets/js/jquery-3.1.1.min.js")"></script>
         <script src="@routes.Assets.versioned("/assets/js/inputvalidation.js")"></script>
+        <script src="@routes.Assets.versioned("/assets/bootstrap/js/bootstrap.min.js")"></script>
+        <script src="@routes.Assets.versioned("/assets/js/index.js")"></script>
 
     </head>
     <body id="home">
@@ -24,6 +35,6 @@
 
     </body>
     <footer>
-        <p>© <a href="https://uk.linkedin.com/in/nenyi-arkaah-75800541" style="text-decoration: none;">Nenyi Arkaah</a>. All rights reserved. Design by TEMPLATED. </p>
+        <p>© <a href="https://uk.linkedin.com/in/nenyi-arkaah-75800541" style="text-decoration: none;">Nenyi Arkaah</a>.</p>
     </footer>
 </html>

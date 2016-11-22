@@ -30,7 +30,7 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
   def process = Action (parse.form(InterestForm)) { implicit request =>
 
     val result = request.body
-    val message = "With an amount of " + result.amount + " at APR of " + result.interest + " interest on payment will be."
+    val message = "With an amount of " + result.amount + " at APR of " + result.interest + "% interest on payment will be."
     Ok(views.html.index(CalculateInterest(result.amount, result.interest), message, InterestForm))
   }
 
