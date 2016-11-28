@@ -10,6 +10,9 @@ import play.api.data.Forms._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import views.html.helper.form
 import play.api.data.format.Formats._
+import play.api.libs.json.JsValue
+import play.api.routing._
+import play.api.libs.json._
 /**
   * Created by Nenyi on 09/08/2016.
   */
@@ -27,17 +30,30 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     (calcData.apply)(calcData.unapply)
   )
 
-  def process = Action (parse.form(InterestForm)) { implicit request =>
+  def process =  Action (parse.form(InterestForm)) { implicit request =>
 
-    val result = request.body
-    val message = "With an amount of " + result.amount + " at APR of " + result.interest + "% interest on payment will be."
-    Ok(views.html.index(CalculateInterest(result.amount, result.interest), message, InterestForm))
+    val body = request.body
+    var message = "With an amount of " + body.amount + " at APR of " + body.interest + "% interest on payment will be."
+    val interest = CalculateInterest(body.amount, body.interest);
+    val json: JsValue = JsObject(Seq(
+      "message" -> JsString(message),
+      "interest" -> JsNumber(interest.getOrElse(0).asInstanceOf[Double])
+    ))
+    Ok(json)
   }
 
   def CalculateInterest(amount: Double, intrest: Double): Option[Double] = {
     if(amount <  0) throw new Error("Amount can not be less than 0.")
     else if(intrest == 0 ) throw new Error("Interest can not be 0.")
     else Option(amount * intrest / 100)
+  }
+
+  def javascriptRoutes = Action { implicit request =>
+    Ok(
+      JavaScriptReverseRouter("jsRoutes")(
+        routes.javascript.Application.process
+      )
+    ).as("text/javascript")
   }
 
   //
