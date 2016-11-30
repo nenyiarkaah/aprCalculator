@@ -6,7 +6,7 @@ import play.api.mvc.BodyParsers.parse
 /**
   * Created by Nenyi on 30/11/2016.
   */
-class CalculateInterest {
+class Calculations {
 
   def CalculateInterest(amount: Double, intrest: Double): Double = {
     if(amount <  0) throw new Error("Amount can not be less than 0.")
