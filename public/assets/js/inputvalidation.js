@@ -1,4 +1,8 @@
-var decimalOnly = /^\s*-?[1-9]\d*(\.\d{1,2})?\s*$/;
+var decimalOnly = /^\s*-?[0-9]\d*(\.\d{1,2})?\s*$/;
+var numbersOnly = /^\d+$/;
+var uppercaseOnly = /^[A-Z]+$/;
+var lowercaseOnly = /^[a-z]+$/;
+var stringOnly = /^[A-Za-z0-9]+$/;
 
   function FormValidation() {
       var interestfield = document.getElementById('inputInterest');
@@ -23,11 +27,14 @@ var decimalOnly = /^\s*-?[1-9]\d*(\.\d{1,2})?\s*$/;
   function testInputData(myfield, restrictionType) {
       var field = document.getElementById(myfield)
       var data = field.value;
+      console.log(data);
       var fieldClass = myfield.replace('input', '').toLowerCase() + 'Class'
       var fieldSpan = myfield.replace('input', '').toLowerCase() + 'Span'
 
       if (data !== '') {
-          if (restrictionType.test(data)) {
+          console.log("isFinite " + isFinite(data));
+          if (restrictionType.test(data) && isFinite(data) && data != 0) {
+              // if (isFinite(data))
               $('#' + fieldClass).removeClass('has-error').addClass('has-success');
               $('#' + fieldSpan).removeClass('glyphicon-remove').addClass('glyphicon-ok');
               return true;

@@ -26,5 +26,11 @@ class ApplicationSpec extends Specification {
       contentType(home) must beSome.which(_ == "text/html")
       contentAsString(home) must contain ("Your new application is ready.")
     }
+
+    "interest calculation amount at zero throws exception" in new WithApplication{
+      val interest = 10;
+      val amount = 0;
+      CalculateInterest(amount,interest)
+    }
   }
 }
