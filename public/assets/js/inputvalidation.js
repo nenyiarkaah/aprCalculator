@@ -7,8 +7,8 @@ var stringOnly = /^[A-Za-z0-9]+$/;
   function FormValidation() {
       var interestfield = document.getElementById('inputInterest');
       var amountfield = document.getElementById('inputAmount');
-      var amountresult = testInputData('inputAmount', decimalOnly);
-      var interestresult = testInputData('inputInterest', decimalOnly);
+      var amountresult = extractAndTestInputData('inputAmount', decimalOnly);
+      var interestresult = extractAndTestInputData('inputInterest', decimalOnly);
       if (amountresult && interestresult) {
           return true;
       } else {
@@ -24,7 +24,7 @@ var stringOnly = /^[A-Za-z0-9]+$/;
 
   // field.addEventListener('change', checkPasswordValidity, false);
 
-  function testInputData(myfield, restrictionType) {
+  function extractAndTestInputData(myfield, restrictionType) {
       var field = document.getElementById(myfield)
       var data = field.value;
       console.log(data);
@@ -32,9 +32,8 @@ var stringOnly = /^[A-Za-z0-9]+$/;
       var fieldSpan = myfield.replace('input', '').toLowerCase() + 'Span'
 
       if (data !== '') {
-          console.log("isFinite " + isFinite(data));
-          if (restrictionType.test(data) && isFinite(data) && data != 0) {
-              // if (isFinite(data))
+          // console.log("isFinite " + isFinite(data));
+          if (testInputData(data, restrictionType)) {
               $('#' + fieldClass).removeClass('has-error').addClass('has-success');
               $('#' + fieldSpan).removeClass('glyphicon-remove').addClass('glyphicon-ok');
               return true;
@@ -51,4 +50,8 @@ var stringOnly = /^[A-Za-z0-9]+$/;
           $('#' + fieldSpan).removeClass('glyphicon-remove');
       }
       return;
+  }
+
+  exports.testInputData = function (data, restrictionType) {
+      return restrictionType.test(data) && isFinite(data) && data > 0;
   }

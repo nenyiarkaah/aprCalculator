@@ -10,7 +10,7 @@
           <label for="inputAmount">Amount</label>
           <div id="amountClass" class="form-group has-success has-feedback">
             <input type="" class="form-control" name="inputAmount" id="inputAmount"
-            placeholder="Enter amount, this can be to 2 decimal number." onkeyup="testInputData('inputAmount',decimalOnly)"
+            placeholder="Enter amount, this can be to 2 decimal number." onkeyup="extractAndTestInputData('inputAmount',decimalOnly)"
             oninput="setCustomValidity('')" required>
             <span id="amountSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
           </div>
@@ -20,7 +20,7 @@
           <label for="inputInterest">Interest</label>
           <div id="interestClass" class="form-group has-success has-feedback">
             <input type="" class="form-control" name="inputInterest" id="inputInterest"
-            placeholder="Enter interest, this can be to 2 decimal number." onkeyup="testInputData('inputInterest',decimalOnly)"
+            placeholder="Enter interest, this can be to 2 decimal number." onkeyup="extractAndTestInputData('inputInterest',decimalOnly)"
             oninput="setCustomValidity('')" required>
             <span id="interestSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
           </div>
