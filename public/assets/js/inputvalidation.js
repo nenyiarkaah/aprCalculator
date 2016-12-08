@@ -22,8 +22,6 @@ var stringOnly = /^[A-Za-z0-9]+$/;
       }
   }
 
-  // field.addEventListener('change', checkPasswordValidity, false);
-
   function extractAndTestInputData(myfield, restrictionType) {
       var field = document.getElementById(myfield)
       var data = field.value;
@@ -53,5 +51,9 @@ var stringOnly = /^[A-Za-z0-9]+$/;
   }
 
   exports.testInputData = function (data, restrictionType) {
-      return restrictionType.test(data) && isFinite(data) && data > 0;
+      return restrictionType.test(data) && isFinite(data) && parseFloat(data) > 0;
+  }
+
+  exports.decimalOnly = function(){
+      return decimalOnly;
   }
