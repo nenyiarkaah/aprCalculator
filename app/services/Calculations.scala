@@ -9,8 +9,8 @@ import play.api.mvc.BodyParsers.parse
 trait Calculations {
 
   def CalculateInterest(amount: Double, intrest: Double): Double = {
-    if(amount <  0) throw new Error("Amount can not be less than 0.")
-    else if(intrest == 0 ) throw new Error("Interest can not be 0.")
+    if(amount <  0) throw new Exception("Amount can not be less than 0.")
+    else if(intrest == 0 ) throw new Exception("Interest can not be 0.")
     else amount * intrest / 100
   }
 
@@ -19,7 +19,7 @@ trait Calculations {
 
     var payments = List[(Double, Double)]()
     if(amount == 0) Nil
-    else if(payment <= 0 ) throw new Error("Payment can not be 0.")
+    else if(payment <= 0 ) throw new Exception("Payment can not be 0.")
     //pass amounts into function
     else
     {
