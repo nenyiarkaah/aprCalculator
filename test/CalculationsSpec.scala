@@ -11,7 +11,28 @@ class CalculationsSpec extends PlaySpec with Calculations {
         val thrown = intercept[Exception] {
           CalculateInterest(0, 10)
         }
-          thrown.getMessage mustBe "Amount can not be less than 0."
+          thrown.getMessage mustBe "Amount can not be less than or equal to 0."
+      }
+
+      "throw error when interest is 0" in {
+        val thrown = intercept[Exception] {
+          CalculateInterest(10, 0)
+        }
+        thrown.getMessage mustBe "Interest can not be less than or equal to 0."
+      }
+
+      "throw error when amount is less than 0" in {
+        val thrown = intercept[Exception] {
+          CalculateInterest(-0.25, 10)
+        }
+        thrown.getMessage mustBe "Amount can not be less than or equal to 0."
+      }
+
+      "throw error when interest is less than 0" in {
+        val thrown = intercept[Exception] {
+          CalculateInterest(10, -0.25)
+        }
+        thrown.getMessage mustBe "Interest can not be less than or equal to 0."
       }
 
       "return the correct value when all inputs are valid" in {

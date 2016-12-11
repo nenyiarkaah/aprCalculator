@@ -8,12 +8,18 @@ import play.api.mvc.BodyParsers.parse
   */
 trait Calculations {
 
-  def CalculateInterest(amount: Double, intrest: Double): Double = {
-    if(amount <  0) throw new Exception("Amount can not be less than 0.")
-    else if(intrest == 0 ) throw new Exception("Interest can not be 0.")
-    else amount * intrest / 100
+  def CalculateInterest(amount: Double, interest: Double): Double = {
+    if (!IsNotLessThanOrEqualToZero(amount)) throw new Exception("Amount can not be less than or equal to 0.")
+    else if (!IsNotLessThanOrEqualToZero(interest)) throw new Exception("Interest can not be less than or equal to 0.")
+    else amount * interest / 100
   }
 
+  private def IsNotLessThanOrEqualToZero(input: Double) = {
+    input match {
+      case x if x <= 0 => false
+      case _ => true
+    }
+  }
 
   def CalculatePaymentPlan(amount: Double, intrest: Double, payment: Double): Unit = {
 
