@@ -21,27 +21,23 @@ trait Calculations {
     }
   }
 
-  def CalculatePaymentPlan(amount: Double, intrest: Double, payment: Double): Unit = {
-
-    var payments = List[(Double, Double)]()
-    if(amount == 0) Nil
+  def CalculatePaymentPlan(payments: List[(Double, Double)], amount: Double, interest: Double, payment: Double): List[(Double, Double)] = {
+    if(amount == 0) payments
     else if(payment <= 0 ) throw new Exception("Payment can not be 0.")
     //pass amounts into function
     else
     {
-      payments ::= CalculatePayment(amount, intrest, payment)
-      println(payments.head)
-      CalculatePaymentPlan(payments.head._1, intrest, payment)
+      val internalPayments = payments :+ CalculatePayment(amount, interest, payment)
+      CalculatePaymentPlan(internalPayments, internalPayments.last._1, interest, payment)
     }
+  }
 
-    def CalculatePayment(amount: Double, intrest: Double, payment: Double): (Double, Double) = {
-      val calculatedInterest = CalculateInterest(amount, intrest)
-      def matchCalculatedIntrest: (Double, Double) = calculatedInterest match {
-        case calculatedIntrestplusAmount if  calculatedIntrestplusAmount + amount < payment =>  (0.00, 0.00)
-        case _ => (amount + calculatedInterest - payment, calculatedInterest)
-      }
-      matchCalculatedIntrest
+  def CalculatePayment(amount: Double, intrest: Double, payment: Double): (Double, Double) = {
+    val calculatedInterest = CalculateInterest(amount, intrest)
+    def matchCalculatedInterest: (Double, Double) = calculatedInterest match {
+      case calculatedInterestPlusAmount if calculatedInterestPlusAmount  + amount < payment => (0.00, 0.00)
+      case _ => (amount + calculatedInterest- payment, calculatedInterest)
     }
-
+    matchCalculatedInterest
   }
 }
