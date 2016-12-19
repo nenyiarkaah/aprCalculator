@@ -1,3 +1,12 @@
+//Navbar active highlighting
+$(document).ready(function () {
+    $('ul.nav > li a').click(function (e) {
+//                e.preventDefault();
+        $('ul.nav > li').removeClass('active');
+        $(this).closest('li').addClass('active');
+    });
+});
+
 // Builds the HTML Table out of List.
 function buildHtmlTable(selector, aList) {
     var columns = addAllColumnHeaders(aList, selector);
