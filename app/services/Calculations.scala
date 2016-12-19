@@ -32,12 +32,22 @@ trait Calculations {
     }
   }
 
-  def CalculatePayment(amount: Double, intrest: Double, payment: Double): (Double, Double) = {
-    val calculatedInterest = CalculateInterest(amount, intrest)
+  def CalculatePayment(amount: Double, interest: Double, payment: Double): (Double, Double) = {
+    val calculatedInterest = CalculateInterest(amount, interest)
     def matchCalculatedInterest: (Double, Double) = calculatedInterest match {
       case calculatedInterestPlusAmount if calculatedInterestPlusAmount  + amount < payment => (0.00, 0.00)
       case _ => (amount + calculatedInterest- payment, calculatedInterest)
     }
     matchCalculatedInterest
   }
+
+  def RoundToTwoDecimalPlaces(number: Double) = {
+    BigDecimal(number).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble
+  }
+
+  def RoundCurrencyToTwoDecimalPlaces(number: Double) = {
+    val formatter = java.text.NumberFormat.getCurrencyInstance
+    formatter.format(BigDecimal(number).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble)
+  }
+
 }

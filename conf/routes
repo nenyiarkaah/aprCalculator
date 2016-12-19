@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index
 # An example controller showing how to use dependency injection
 
-GET     /process                    controllers.Application.process
+GET     /processCalculator                    controllers.Application.processCalculator
 
 GET     /processPaymentPlan                    controllers.Application.processPaymentPlan
 

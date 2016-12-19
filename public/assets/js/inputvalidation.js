@@ -48,7 +48,7 @@ function PaymentPlanFormValidation() {
   function extractAndTestInputData(myfield, restrictionType) {
       var field = document.getElementById(myfield)
       var data = field.value;
-      console.log(data);
+      // console.log(data);
       var fieldClass = myfield.replace('input', '').toLowerCase() + 'Class'
       var fieldSpan = myfield.replace('input', '').toLowerCase() + 'Span'
 

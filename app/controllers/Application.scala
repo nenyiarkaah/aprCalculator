@@ -38,7 +38,7 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     (paymentData.apply)(paymentData.unapply)
   )
 
-  def process =  Action (parse.form(InterestForm)) { implicit request =>
+  def processCalculator =  Action (parse.form(InterestForm)) { implicit request =>
 
     val body = request.body
     var message = "With an amount of " + body.amount + " at APR of " + body.interest + "% interest on payment will be."
@@ -53,9 +53,11 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
   def processPaymentPlan =  Action (parse.form(PaymentForm)) { implicit request =>
 
     val body = request.body
-    val paymentPlan = CalculatePaymentPlan(List[(Double, Double)](), body.amount, body.interest, body.payment);
+    var head = List[(Double, Double)]()
+    head ::= (body.amount, body.interest)
+    val paymentPlan = CalculatePaymentPlan(head, body.amount, body.interest, body.payment);
     val json: JsValue = Json.toJson(
-      paymentPlan.map {p => Map("amount" -> p._1, "interest" -> p._2)}
+      paymentPlan.map {p => Map("amount" -> RoundCurrencyToTwoDecimalPlaces(p._1), "interest" -> RoundCurrencyToTwoDecimalPlaces(p._2))}
     )
     Ok(json)
   }
@@ -63,7 +65,7 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
   def javascriptRoutes = Action { implicit request =>
     Ok(
       JavaScriptReverseRouter("jsRoutes")(
-        routes.javascript.Application.process
+        routes.javascript.Application.processCalculator
       )
     ).as("text/javascript")
   }

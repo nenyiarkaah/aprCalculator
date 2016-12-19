@@ -37,7 +37,8 @@
                 <input type="submit" name="submitPayment" id="submitPayment" value="Submit" class="btn tada btn-embossed btn-primary pull-right">
             </div>
             <br>
-            <div class="col-md-6 col-md-offset-3 col-lg-offset-4 text-left">
+            <p id="paymentMessage"></p>
+            <div class="table-wrapper">
                 <table id="paymentPlanTable" border="1">
                 </table>
             </div>
@@ -59,7 +60,8 @@
                     data: $("#PaymentForm").serialize(),
                     dataType: "json",
                     success: function (response) {
-                        console.log(response);
+                        document.getElementById('paymentMessage').innerHTML = "The amount will take " + Object.keys(response).length + " payments to pay off.";
+                        $("#paymentPlanTable tr").remove();
                         buildHtmlTable('#paymentPlanTable', response);
                     },
                     error: function (response) {
