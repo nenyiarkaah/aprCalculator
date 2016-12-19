@@ -1,9 +1,76 @@
 <!-- Payment plan-->
 <div id="plan" class="content-section-a content" style="border-top: 0">
   <div class="container content-section-b-inner">
-    <form role="form" action="/processplan" method="get" id="PaymentForm" name="PaymentForm" onsubmit="return FormValidation();">
+    <form role="form" id="PaymentForm" name="PaymentForm">
+        <div class="col-md-6 col-md-offset-3 col-lg-offset-4">
+            <div class="form-group">
+                <label for="paymentAmount">Amount</label>
+                <div id="amountClass" class="form-group has-success has-feedback">
+                    <input type="" class="form-control" name="paymentAmount" id="paymentAmount"
+                    placeholder="Enter amount, this can be to 2 decimal number." onkeyup="extractAndTestInputData('paymentAmount',decimalOnly)"
+                    oninput="setCustomValidity('')" required>
+                    <span id="amountPaymentSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+            </div>
 
-            </form>
+            <div class="form-group">
+                <label for="paymentInterest">Interest</label>
+                <div id="interestClass" class="form-group has-success has-feedback">
+                    <input type="" class="form-control" name="paymentInterest" id="paymentInterest"
+                    placeholder="Enter interest, this can be to 2 decimal number." onkeyup="extractAndTestInputData('paymentInterest',decimalOnly)"
+                    oninput="setCustomValidity('')" required>
+                    <span id="interestPaymentSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="paymentPayment">Payment</label>
+                <div id="paymentClass" class="form-group has-success has-feedback">
+                    <input type="" class="form-control" name="paymentPayment" id="paymentPayment"
+                    placeholder="Enter payment, this can be to 2 decimal number." onkeyup="extractAndTestInputData('paymentPayment',decimalOnly)"
+                    oninput="setCustomValidity('')" required>
+                    <span id="paymentPaymentSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" name="submitPayment" id="submitPayment" value="Submit" class="btn tada btn-embossed btn-primary pull-right">
+            </div>
+            <br>
+            <div class="col-md-6 col-md-offset-3 col-lg-offset-4 text-left">
+                <table id="paymentPlanTable" border="1">
+                </table>
+            </div>
+        </div>
+    </form>
   </div>
 </div>
   <!-- / Payment plan-->
+<script></script>
+<script>
+        var $payform = $("#PaymentForm");
+
+        $payform.on('submit', function () {
+            $payform.preventDefault;
+            if(PaymentPlanFormValidation()) {
+                $.ajax({
+                    type: 'GET',
+                    url: '@routes.Application.processPaymentPlan()',
+                    data: $("#PaymentForm").serialize(),
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        buildHtmlTable('#paymentPlanTable', response);
+                    },
+                    error: function (response) {
+                        var responseTextObject = response.responseText;
+                        alert(responseTextObject);
+                    }
+                });
+                return false;
+            }
+
+        })
+</script>
+
+<script type="text/javascript" src="@routes.Application.javascriptRoutes"></script>

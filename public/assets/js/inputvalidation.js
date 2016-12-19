@@ -4,7 +4,7 @@ var uppercaseOnly = /^[A-Z]+$/;
 var lowercaseOnly = /^[a-z]+$/;
 var stringOnly = /^[A-Za-z0-9]+$/;
 
-  function FormValidation() {
+  function CalculatorFormValidation() {
       var interestfield = document.getElementById('inputInterest');
       var amountfield = document.getElementById('inputAmount');
       var amountresult = extractAndTestInputData('inputAmount', decimalOnly);
@@ -15,12 +15,35 @@ var stringOnly = /^[A-Za-z0-9]+$/;
           if (!amountresult) {
               amountfield.setCustomValidity('The amount should be a 2 decimal number.');
           }
-          if (!amountresult) {
-              amountfield.setCustomValidity('The amount should be a 2 decimal number.');
+          if (!interestresult) {
+              interestfield.setCustomValidity('The interest should be a 2 decimal number.');
           }
           return false;
       }
   }
+
+function PaymentPlanFormValidation() {
+    var interestField = document.getElementById('paymentInterest');
+    var amountField = document.getElementById('paymentAmount');
+    var paymentField = document.getElementById('paymentPayment');
+    var amountResult = extractAndTestInputData('paymentAmount', decimalOnly);
+    var interestResult = extractAndTestInputData('paymentInterest', decimalOnly);
+    var paymentResult = extractAndTestInputData('paymentPayment', decimalOnly);
+    if (amountResult && interestResult && paymentResult) {
+        return true;
+    } else {
+        if (!amountResult) {
+            amountField.setCustomValidity('The amount should be a 2 decimal number.');
+        }
+        if (!interestResult) {
+            interestField.setCustomValidity('The interest should be a 2 decimal number.');
+        }
+        if (!paymentResult) {
+            paymentField.setCustomValidity('The payment should be a 2 decimal number.');
+        }
+        return false;
+    }
+}
 
   function extractAndTestInputData(myfield, restrictionType) {
       var field = document.getElementById(myfield)
@@ -50,10 +73,13 @@ var stringOnly = /^[A-Za-z0-9]+$/;
       return;
   }
 
-  exports.testInputData = function (data, restrictionType) {
-      return restrictionType.test(data) && isFinite(data) && parseFloat(data) > 0;
-  }
+testInputData = function (data, restrictionType) {
+    return restrictionType.test(data) && isFinite(data) && parseFloat(data) > 0;
+}
+exports.testInputData = function (data, restrictionType) {
+  return testInputData(data, restrictionType);
+}
 
-  exports.decimalOnly = function(){
-      return decimalOnly;
-  }
+exports.decimalOnly = function(){
+  return decimalOnly;
+}

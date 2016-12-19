@@ -29,6 +29,15 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     (calcData.apply)(calcData.unapply)
   )
 
+  val PaymentForm = Form(
+    mapping(
+      "paymentAmount" -> of(doubleFormat),
+      "paymentInterest" -> of(doubleFormat),
+      "paymentPayment" -> of(doubleFormat)
+    )
+    (paymentData.apply)(paymentData.unapply)
+  )
+
   def process =  Action (parse.form(InterestForm)) { implicit request =>
 
     val body = request.body
@@ -38,6 +47,16 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
       "message" -> JsString(message),
       "interest" -> JsNumber(interest)
     ))
+    Ok(json)
+  }
+
+  def processPaymentPlan =  Action (parse.form(PaymentForm)) { implicit request =>
+
+    val body = request.body
+    val paymentPlan = CalculatePaymentPlan(List[(Double, Double)](), body.amount, body.interest, body.payment);
+    val json: JsValue = Json.toJson(
+      paymentPlan.map {p => Map("amount" -> p._1, "interest" -> p._2)}
+    )
     Ok(json)
   }
 

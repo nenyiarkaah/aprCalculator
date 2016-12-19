@@ -45,7 +45,7 @@
 
         $intform.on('submit', function () {
             $intform.preventDefault;
-            if(FormValidation()) {
+            if(CalculatorFormValidation()) {
                 $.ajax({
                     type: 'GET',
                     url: '@routes.Application.process()',
