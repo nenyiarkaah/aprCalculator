@@ -1,12 +1,41 @@
 //Navbar active highlighting
 $(document).ready(function () {
     $('ul.nav > li a').click(function (e) {
-//                e.preventDefault();
         $('ul.nav > li').removeClass('active');
         $(this).closest('li').addClass('active');
     });
 });
 
+//Scrolling active Navbar highlighting
+$(document).ready(function(){
+    // $sections includes all of the container divs that relate to menu items.
+    var $sections = $('.content');
+
+    // The user scrolls
+    $(window).scroll(function(){
+        // We check the position of each of the divs compared to the windows scroll position
+        $sections.each(function(){
+
+            var docViewTop = $(window).scrollTop();
+            var docViewBottom = docViewTop + $(window).height();
+
+            var currentSection = $(this);
+            var id = currentSection.attr('id');
+
+            var elem = $('#'+id);
+            var elemTop = $(elem).offset().top;
+            var elemBottom = elemTop + $(elem).height();
+            if ((elemBottom <= docViewBottom) && (elemTop >= docViewTop)) {
+                var activeId = $(".nav").find("li.active a").attr("href");
+                if("#"+id != activeId){
+                    $(".nav").find(".active").removeClass("active");
+                    $(".nav").find("[href=\\#"+id+"]").parent().addClass('active');
+                }
+            }
+        })
+
+    });
+});
 // Builds the HTML Table out of List.
 function buildHtmlTable(selector, aList) {
     var columns = addAllColumnHeaders(aList, selector);
@@ -42,6 +71,5 @@ function addAllColumnHeaders(aList, selector)
         }
     }
     $(selector).append(headerTr$);
-
     return columnSet;
 }
