@@ -48,10 +48,10 @@
 </div>
   <!-- / Payment plan-->
 <script>
-        var $payform = $("#PaymentForm");
+        var $payForm = $("#PaymentForm");
 
-        $payform.on('submit', function () {
-            $payform.preventDefault;
+        $payForm.on('submit', function () {
+            $payForm.preventDefault;
             if(PaymentPlanFormValidation()) {
                 $.ajax({
                     type: 'GET',

@@ -23,11 +23,17 @@ trait Calculations {
 
   def CalculatePaymentPlan(payments: List[(Double, Double)], amount: Double, interest: Double, payment: Double): List[(Double, Double)] = {
     if(amount == 0) payments
+    else if (amount.isNaN) payments
     else if(payment <= 0 ) throw new Exception("Payment can not be 0.")
     //pass amounts into function
     else
     {
-      val internalPayments = payments :+ CalculatePayment(amount, interest, payment)
+      val internalPayments = payments match {
+        case Nil =>
+          var head :(Double, Double) = (amount, 0.00)
+          List(head) :+ CalculatePayment(amount, interest, payment)
+        case _ => payments :+ CalculatePayment(amount, interest, payment)
+      }
       CalculatePaymentPlan(internalPayments, internalPayments.last._1, interest, payment)
     }
   }
@@ -35,10 +41,27 @@ trait Calculations {
   def CalculatePayment(amount: Double, interest: Double, payment: Double): (Double, Double) = {
     val calculatedInterest = CalculateInterest(amount, interest)
     def matchCalculatedInterest: (Double, Double) = calculatedInterest match {
-      case calculatedInterestPlusAmount if calculatedInterestPlusAmount  + amount < payment => (0.00, 0.00)
+      case Double.NaN => (Double.NaN, Double.NaN)
+      case calculatedInterestPlusAmount if calculatedInterestPlusAmount  + amount < payment => (Double.NaN, Double.NaN)
       case _ => (amount + calculatedInterest- payment, calculatedInterest)
     }
     matchCalculatedInterest
+  }
+
+  def CalculatePaymentPlanTotal(payments: List[(Double, Double)], amount: Double, total: Double, noOfPayments: Int): (Double, Double) = {
+    payments match {
+      case Nil => (total, noOfPayments)
+      case head :: tail =>
+        head match {
+          case head if head._1.isNaN || head._2.isNaN => (total, noOfPayments)
+          case _ =>
+            val newTotal = if (amount < head._1) total + amount else total + head._1
+            var newNoOfPayments = noOfPayments + 1
+            println(head)
+            println("newTotal:-" + newTotal + " newNoOfPayments:-" + newNoOfPayments)
+            CalculatePaymentPlanTotal(tail, amount, newTotal, newNoOfPayments)
+        }
+    }
   }
 
   def RoundToTwoDecimalPlaces(number: Double) = {
