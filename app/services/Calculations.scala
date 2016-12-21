@@ -1,8 +1,5 @@
 package services
 
-import play.api.libs.json.{JsNumber, JsObject, JsString, JsValue}
-import play.api.mvc.BodyParsers.parse
-
 /**
   * Created by Nenyi on 30/11/2016.
   */
@@ -48,29 +45,19 @@ trait Calculations {
     matchCalculatedInterest
   }
 
-  def CalculatePaymentPlanTotal(payments: List[(Double, Double)], amount: Double, total: Double, noOfPayments: Int): (Double, Double) = {
+  def CalculatePaymentPlanTotal(payments: List[(Double, Double)], payment: Double, total: Double, noOfPayments: Int): (Double, Double) = {
     payments match {
       case Nil => (total, noOfPayments)
       case head :: tail =>
         head match {
           case head if head._1.isNaN || head._2.isNaN => (total, noOfPayments)
           case _ =>
-            val newTotal = if (amount < head._1) total + amount else total + head._1
+            val newTotal = if (payment < head._1) total + payment else total + head._1
             var newNoOfPayments = noOfPayments + 1
-            println(head)
-            println("newTotal:-" + newTotal + " newNoOfPayments:-" + newNoOfPayments)
-            CalculatePaymentPlanTotal(tail, amount, newTotal, newNoOfPayments)
+            CalculatePaymentPlanTotal(tail, payment, newTotal, newNoOfPayments)
         }
     }
   }
 
-  def RoundToTwoDecimalPlaces(number: Double) = {
-    BigDecimal(number).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble
-  }
-
-  def RoundCurrencyToTwoDecimalPlaces(number: Double) = {
-    val formatter = java.text.NumberFormat.getCurrencyInstance
-    formatter.format(BigDecimal(number).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble)
-  }
 
 }

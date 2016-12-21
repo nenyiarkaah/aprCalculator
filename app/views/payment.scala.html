@@ -32,12 +32,14 @@
                     <span id="paymentPaymentSpan" class="glyphicon glyphicon-ok form-control-feedback"></span>
                 </div>
             </div>
-            <br>
             <div class="form-group">
                 <input type="submit" name="submitPayment" id="submitPayment" value="Submit" class="btn tada btn-embossed btn-primary pull-right">
             </div>
             <br>
-            <p id="paymentMessage"></p>
+            <div>
+                <p id="paymentMessage1"></p>
+                <p id="paymentMessage2"></p>
+            </div>
             <div class="table-wrapper">
                 <table id="paymentPlanTable" border="1">
                 </table>
@@ -59,12 +61,18 @@
                     data: $("#PaymentForm").serialize(),
                     dataType: "json",
                     success: function (response) {
-                        document.getElementById('paymentMessage').innerHTML = "The amount will take " + Object.keys(response).length + " payments to pay off.";
+                        console.log(response);
+                        var payments = response.payments;
+                        var summary = response.paymentTotal;
+//                        console.log(payments);
+                        document.getElementById('paymentMessage1').innerHTML = "This amount will take " + summary.noOfPayments + " payments to complete.";
+                        document.getElementById('paymentMessage2').innerHTML = "And you will pay " + summary.totalPayments + ".";
                         $("#paymentPlanTable tr").remove();
-                        buildHtmlTable('#paymentPlanTable', response);
+                        buildHtmlTable('#paymentPlanTable', payments);
                     },
                     error: function (response) {
                         var responseTextObject = response.responseText;
+                        console.log(responseTextObject);
                         alert(responseTextObject);
                     }
                 });

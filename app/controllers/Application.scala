@@ -15,7 +15,7 @@ import services._
 /**
   * Created by Nenyi on 09/08/2016.
   */
-class Application @Inject()(val messagesApi: MessagesApi) extends Controller with I18nSupport with Calculations {
+class Application @Inject()(val messagesApi: MessagesApi) extends Controller with I18nSupport with Calculations with Conversions{
 
 
   def index = Action { implicit request =>
@@ -54,13 +54,14 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
 
     val body = request.body
     var head = List[(Double, Double)]()
-    head ::= (body.amount, body.interest)
+    head ::= (body.amount, 0.00)
     val paymentPlan = CalculatePaymentPlan(head, body.amount, body.interest, body.payment);
-    val json: JsValue = Json.toJson(
-      paymentPlan.map {p => Map("amount" -> RoundCurrencyToTwoDecimalPlaces(p._1), "interest" -> RoundCurrencyToTwoDecimalPlaces(p._2))}
-    )
+    val total = CalculatePaymentPlanTotal(paymentPlan, body.payment, 0, 0)
+    val json: JsValue = ConvertPaymentObjectsToJson(paymentPlan, total)
     Ok(json)
   }
+
+
 
   def javascriptRoutes = Action { implicit request =>
     Ok(

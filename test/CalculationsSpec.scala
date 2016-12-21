@@ -1,8 +1,6 @@
-import akka.event.Logging.Error
 import org.scalatestplus.play._
 import org.scalatest.Matchers._
 
-import scala.collection.mutable
 import services._
 
 class CalculationsSpec extends PlaySpec with Calculations {
@@ -122,6 +120,17 @@ class CalculationsSpec extends PlaySpec with Calculations {
       val result = CalculatePaymentPlan(head, 1000, 1, 100)
       result.dropRight(1) shouldEqual expected.dropRight(1)
       result.last._1.isNaN & result.last._2.isNaN shouldEqual expected.last._1.isNaN & expected.last._2.isNaN
+    }
+  }
+
+  "CalculatePaymentPlanTotal" must {
+    var head = List[(Double, Double)]()
+    "return the correct value when all inputs are valid test 1" in {
+      val expected = (106.32727712,6.0)
+      val payment = 20
+      val result = CalculatePaymentPlanTotal(CalculatePaymentPlan(head, 100, 2, payment), payment, 0, 0)
+
+      result shouldEqual expected
     }
   }
 }
