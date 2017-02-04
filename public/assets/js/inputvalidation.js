@@ -46,11 +46,11 @@ function PaymentPlanFormValidation() {
 }
 
   function extractAndTestInputData(myfield, restrictionType) {
-      var field = document.getElementById(myfield)
+      var field = document.getElementById(myfield);
       var data = field.value;
       // console.log(data);
-      var fieldClass = myfield.replace('input', '').toLowerCase() + 'Class'
-      var fieldSpan = myfield.replace('input', '').toLowerCase() + 'Span'
+      var fieldClass = myfield.replace('input', '').toLowerCase() + 'Class';
+      var fieldSpan = myfield.replace('input', '').toLowerCase() + 'Span';
 
       if (data !== '') {
           // console.log("isFinite " + isFinite(data));
@@ -70,16 +70,16 @@ function PaymentPlanFormValidation() {
           $('#' + fieldSpan).removeClass('glyphicon-ok');
           $('#' + fieldSpan).removeClass('glyphicon-remove');
       }
-      return;
+      
   }
 
 testInputData = function (data, restrictionType) {
     return restrictionType.test(data) && isFinite(data) && parseFloat(data) > 0;
-}
+};
 exports.testInputData = function (data, restrictionType) {
   return testInputData(data, restrictionType);
-}
+};
 
 exports.decimalOnly = function(){
   return decimalOnly;
-}
+};

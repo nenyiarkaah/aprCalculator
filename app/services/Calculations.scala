@@ -4,52 +4,66 @@ package services
   * Created by Nenyi on 30/11/2016.
   */
 trait Calculations {
+
   class AmountCannotBeZeroException() extends Exception("Amount can not be less than or equal to 0.")
+
   class InterestCannotBeZeroException() extends Exception("Interest can not be less than or equal to 0.")
+
   class PaymentCannotBeZeroException extends Exception("Payment can not be 0.")
 
-  def CalculateInterest(amount: Double, interest: Double): Double = {
-    if (!IsNotLessThanOrEqualToZero(amount)) throw new AmountCannotBeZeroException
-    else if (!IsNotLessThanOrEqualToZero(interest)) throw new InterestCannotBeZeroException
-    else amount * interest / 100
+  def calculateInterest(amount: Double, interest: Double): Double = {
+    isNotLessThanOrEqualToZero(amount) match {
+      case false => throw new AmountCannotBeZeroException
+      case true =>
+    }
+    isNotLessThanOrEqualToZero(interest) match {
+      case false => throw new InterestCannotBeZeroException
+      case true =>
+    }
+    amount * interest / 100
   }
 
-  private def IsNotLessThanOrEqualToZero(input: Double) = {
+  private def isNotLessThanOrEqualToZero(input: Double) = {
     input match {
       case x if x <= 0 => false
       case _ => true
     }
   }
 
-  def CalculatePaymentPlan(payments: List[(Double, Double)], amount: Double, interest: Double, payment: Double): List[(Double, Double)] = {
-    if(amount == 0) payments
-    else if (amount.isNaN) payments
-    else if(payment <= 0 ) throw new PaymentCannotBeZeroException
-    //pass amounts into function
-    else
-    {
-      val internalPayments = payments match {
-        case Nil =>
-          var head :(Double, Double) = (amount, 0.00)
-          List(head) :+ CalculatePayment(amount, interest, payment)
-        case _ => payments :+ CalculatePayment(amount, interest, payment)
-      }
-      CalculatePaymentPlan(internalPayments, internalPayments.last._1, interest, payment)
+  def calculatePaymentPlan(payments: List[(Double, Double)], amount: Double, interest: Double, payment: Double): List[(Double, Double)] = {
+    isNotLessThanOrEqualToZero(payment) match {
+      case false => throw new PaymentCannotBeZeroException
+      case true =>
+    }
+    amount match {
+      case 0 => payments
+      case x if (x.isNaN) => payments
+      case _ =>
+        val internalPayments = payments match {
+          case Nil =>
+            val head: (Double, Double) = (amount, 0.00)
+            List(head) :+ calculatePayment(amount, interest, payment)
+          case _ => payments :+ calculatePayment(amount, interest, payment)
+        }
+        val newPayment = internalPayments.lastOption.getOrElse(throw new RuntimeException("No new payments are available"))
+        calculatePaymentPlan(internalPayments, newPayment._1, interest, payment)
     }
   }
 
-  def CalculatePayment(amount: Double, interest: Double, payment: Double): (Double, Double) = {
-    val calculatedInterest = CalculateInterest(amount, interest)
+  def calculatePayment(amount: Double, interest: Double, payment: Double): (Double, Double) = {
+    val calculatedInterest = calculateInterest(amount, interest)
+
     def matchCalculatedInterest: (Double, Double) = calculatedInterest match {
       case Double.NaN => (Double.NaN, Double.NaN)
-      case calculatedInterestPlusAmount if calculatedInterestPlusAmount  + amount < payment => (Double.NaN, Double.NaN)
-      case _ => (amount + calculatedInterest- payment, calculatedInterest)
+      case calculatedInterestPlusAmount if calculatedInterestPlusAmount + amount < payment => (Double.NaN, Double.NaN)
+      case _ => (amount + calculatedInterest - payment, calculatedInterest)
     }
-//    println(matchCalculatedInterest)
+
+    //    println(matchCalculatedInterest)
     matchCalculatedInterest
   }
 
-  def CalculatePaymentPlanTotal(payments: List[(Double, Double)], payment: Double, total: Double, noOfPayments: Int): (Double, Double) = {
+  def calculatePaymentPlanTotal(payments: List[(Double, Double)], payment: Double, total: Double, noOfPayments: Int): (Double, Double) = {
     payments match {
       case Nil => (total, noOfPayments)
       case head :: tail =>
@@ -57,11 +71,9 @@ trait Calculations {
           case head if head._1.isNaN || head._2.isNaN => (total, noOfPayments)
           case _ =>
             val newTotal = if (payment < head._1) total + payment else total + head._1
-            var newNoOfPayments = noOfPayments + 1
-            CalculatePaymentPlanTotal(tail, payment, newTotal, newNoOfPayments)
+            val newNoOfPayments = noOfPayments + 1
+            calculatePaymentPlanTotal(tail, payment, newTotal, newNoOfPayments)
         }
     }
   }
-
-
 }
