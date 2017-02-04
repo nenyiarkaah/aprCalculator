@@ -54,11 +54,13 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
   def processPaymentPlan = Action(parse.form(paymentForm)) { implicit request =>
 
     val body = request.body
-    var head = List[(Double, Double)]()
-    head ::= (body.amount, 0.00)
+    val head = List[(Double, Double)]().::(body.amount, 0.00)
+//    head ::= (body.amount, 0.00)
     val paymentPlan = calculatePaymentPlan(head, body.amount, body.interest, body.payment);
-    val total = calculatePaymentPlanTotal(paymentPlan, body.payment, 0, 0)
-    val json: JsValue = convertPaymentObjectsToJson(paymentPlan, total)
+    val calc = calculatePaymentPlanTotal(paymentPlan, body.payment, 0, 0)
+    val total = calc("total")
+    val noOfPayments = calc("noOfPayments")
+    val json: JsValue = convertPaymentObjectsToJson(paymentPlan, total, noOfPayments)
     Ok(json)
   }
 

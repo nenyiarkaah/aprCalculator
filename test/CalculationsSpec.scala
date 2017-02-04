@@ -119,9 +119,9 @@ class CalculationsSpec extends PlaySpec with Calculations {
   }
 
   "calculatePaymentPlanTotal" must {
-    var head = List[(Double, Double)]()
+    val head = List[(Double, Double)]()
     "return the correct value when all inputs are valid test 1" in {
-      val expected = (106.32727712,6.0)
+      val expected = Map("total" -> 106.32727712, "noOfPayments" -> 6.0)
       val payment = 20
       val result = calculatePaymentPlanTotal(calculatePaymentPlan(head, 100, 2, payment), payment, 0, 0)
 

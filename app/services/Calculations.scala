@@ -63,12 +63,12 @@ trait Calculations {
     matchCalculatedInterest
   }
 
-  def calculatePaymentPlanTotal(payments: List[(Double, Double)], payment: Double, total: Double, noOfPayments: Int): (Double, Double) = {
+  def calculatePaymentPlanTotal(payments: List[(Double, Double)], payment: Double, total: Double, noOfPayments: Int): Map[String, Double] = {
     payments match {
-      case Nil => (total, noOfPayments)
+      case Nil => Map("total" -> total, "noOfPayments" -> noOfPayments)
       case head :: tail =>
         head match {
-          case head if head._1.isNaN || head._2.isNaN => (total, noOfPayments)
+          case head if head._1.isNaN || head._2.isNaN => Map("total" -> total, "noOfPayments" -> noOfPayments)
           case _ =>
             val newTotal = if (payment < head._1) total + payment else total + head._1
             val newNoOfPayments = noOfPayments + 1

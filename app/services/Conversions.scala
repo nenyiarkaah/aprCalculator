@@ -15,12 +15,12 @@ trait Conversions {
     formatter.format(BigDecimal(number).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble)
   }
 
-  def convertPaymentObjectsToJson(paymentPlan: List[(Double, Double)], total: (Double, Double)): JsValue = {
+  def convertPaymentObjectsToJson(paymentPlan: List[(Double, Double)], total: Double, noOfPayments: Double): JsValue = {
     val payments =
       paymentPlan.filter(_._1.isNaN != true).filter(_._2.isNaN != true).map {
         p => Map("amount" -> roundCurrencyToTwoDecimalPlaces(p._1), "interest" -> roundCurrencyToTwoDecimalPlaces(p._2))
       }
-    val totals = Map("totalPayments" -> roundCurrencyToTwoDecimalPlaces(total._1), "noOfPayments" -> total._2.toInt.toString)
+    val totals = Map("totalPayments" -> roundCurrencyToTwoDecimalPlaces(total), "noOfPayments" -> noOfPayments.toInt.toString)
     val json = Json.obj("payments" -> payments, "paymentTotal" -> totals)
     json
   }
