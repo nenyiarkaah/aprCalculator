@@ -7,31 +7,27 @@ class CalculationsSpec extends PlaySpec with Calculations {
 
     "CalculateInterest" must {
       "throw error when amount is 0" in {
-        val thrown = intercept[Exception] {
+        val thrown = intercept[AmountCannotBeZeroException] {
           CalculateInterest(0, 10)
         }
-          thrown.getMessage mustBe "Amount can not be less than or equal to 0."
       }
 
       "throw error when interest is 0" in {
-        val thrown = intercept[Exception] {
+        val thrown = intercept[InterestCannotBeZeroException] {
           CalculateInterest(10, 0)
         }
-        thrown.getMessage mustBe "Interest can not be less than or equal to 0."
       }
 
       "throw error when amount is less than 0" in {
-        val thrown = intercept[Exception] {
+        val thrown = intercept[AmountCannotBeZeroException] {
           CalculateInterest(-0.25, 10)
         }
-        thrown.getMessage mustBe "Amount can not be less than or equal to 0."
       }
 
       "throw error when interest is less than 0" in {
-        val thrown = intercept[Exception] {
+        val thrown = intercept[InterestCannotBeZeroException] {
           CalculateInterest(10, -0.25)
         }
-        thrown.getMessage mustBe "Interest can not be less than or equal to 0."
       }
 
       "return the correct value when all inputs are valid" in {
@@ -43,38 +39,33 @@ class CalculationsSpec extends PlaySpec with Calculations {
   "CalculatePaymentPlan" must {
     var head = List[(Double, Double)]()
     "throw error when interest is 0" in {
-      val thrown = intercept[Exception] {
+      val thrown = intercept[InterestCannotBeZeroException] {
         CalculatePaymentPlan(head, 1000, 0, 200)
       }
-      thrown.getMessage mustBe "Interest can not be less than or equal to 0."
     }
 
     "throw error when interest is a negative greater than -1" in {
-      val thrown = intercept[Exception] {
+      val thrown = intercept[InterestCannotBeZeroException] {
         CalculatePaymentPlan(head, 1000, -0.25, 200)
       }
-      thrown.getMessage mustBe "Interest can not be less than or equal to 0."
     }
 
     "throw error when interest is a negative less than -1" in {
-      val thrown = intercept[Exception] {
+      val thrown = intercept[InterestCannotBeZeroException] {
         CalculatePaymentPlan(head, 1000, -10.25, 200)
       }
-      thrown.getMessage mustBe "Interest can not be less than or equal to 0."
     }
 
     "throw error when amount is a negative greater than -1" in {
-      val thrown = intercept[Exception] {
+      val thrown = intercept[AmountCannotBeZeroException] {
         CalculatePaymentPlan(head, -0.25, 10, 200)
       }
-      thrown.getMessage mustBe "Amount can not be less than or equal to 0."
     }
 
     "throw error when amount is a negative less than -1" in {
-      val thrown = intercept[Exception] {
+      val thrown = intercept[AmountCannotBeZeroException] {
         CalculatePaymentPlan(head, -10.25, 10, 200)
       }
-      thrown.getMessage mustBe "Amount can not be less than or equal to 0."
     }
 
     "when amount is 0 return empty unit" in {
@@ -82,24 +73,21 @@ class CalculationsSpec extends PlaySpec with Calculations {
     }
 
     "throw error when payment is 0" in {
-      val thrown = intercept[Exception] {
+      val thrown = intercept[PaymentCannotBeZeroException] {
         CalculatePaymentPlan(head, 1000, 10, 0)
       }
-      thrown.getMessage mustBe "Payment can not be 0."
     }
 
     "throw error when payment is a negative greater than -1" in {
-      val thrown = intercept[Exception] {
+      val thrown = intercept[PaymentCannotBeZeroException] {
         CalculatePaymentPlan(head, 1000, 10, -0.25)
       }
-      thrown.getMessage mustBe "Payment can not be 0."
     }
 
     "throw error when payment is a negative less than -1" in {
-      val thrown = intercept[Exception] {
+      val thrown = intercept[PaymentCannotBeZeroException] {
         CalculatePaymentPlan(head, 1000, 10, -10.25)
       }
-      thrown.getMessage mustBe "Payment can not be 0."
     }
 
     "throw error when payment plan is infinite and causes a stack overflow" in {
@@ -116,6 +104,13 @@ class CalculationsSpec extends PlaySpec with Calculations {
     }
 
     "return the correct value when all inputs are valid test 2" in {
+      val expected = List((1000.00, 0.00), (910.0,10.0), (819.1,9.1), (727.291,8.191), (634.5639100000001,7.27291), (540.9095491,6.3456391000000005), (446.31864459100007,5.409095491), (350.7818310369101,4.463186445910001), (254.28964934727918,3.507818310369101), (156.83254584075195,2.542896493472792), (58.40087129915946,1.5683254584075195), (Double.NaN,Double.NaN))
+      val result = CalculatePaymentPlan(head, 1000, 1, 100)
+      result.dropRight(1) shouldEqual expected.dropRight(1)
+      result.last._1.isNaN & result.last._2.isNaN shouldEqual expected.last._1.isNaN & expected.last._2.isNaN
+    }
+
+    "return the correct value when all inputs are valid test 3" in {
       val expected = List((1000.00, 0.00), (910.0,10.0), (819.1,9.1), (727.291,8.191), (634.5639100000001,7.27291), (540.9095491,6.3456391000000005), (446.31864459100007,5.409095491), (350.7818310369101,4.463186445910001), (254.28964934727918,3.507818310369101), (156.83254584075195,2.542896493472792), (58.40087129915946,1.5683254584075195), (Double.NaN,Double.NaN))
       val result = CalculatePaymentPlan(head, 1000, 1, 100)
       result.dropRight(1) shouldEqual expected.dropRight(1)

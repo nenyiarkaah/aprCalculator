@@ -4,10 +4,13 @@ package services
   * Created by Nenyi on 30/11/2016.
   */
 trait Calculations {
+  class AmountCannotBeZeroException() extends Exception("Amount can not be less than or equal to 0.")
+  class InterestCannotBeZeroException() extends Exception("Interest can not be less than or equal to 0.")
+  class PaymentCannotBeZeroException extends Exception("Payment can not be 0.")
 
   def CalculateInterest(amount: Double, interest: Double): Double = {
-    if (!IsNotLessThanOrEqualToZero(amount)) throw new Exception("Amount can not be less than or equal to 0.")
-    else if (!IsNotLessThanOrEqualToZero(interest)) throw new Exception("Interest can not be less than or equal to 0.")
+    if (!IsNotLessThanOrEqualToZero(amount)) throw new AmountCannotBeZeroException
+    else if (!IsNotLessThanOrEqualToZero(interest)) throw new InterestCannotBeZeroException
     else amount * interest / 100
   }
 
@@ -21,7 +24,7 @@ trait Calculations {
   def CalculatePaymentPlan(payments: List[(Double, Double)], amount: Double, interest: Double, payment: Double): List[(Double, Double)] = {
     if(amount == 0) payments
     else if (amount.isNaN) payments
-    else if(payment <= 0 ) throw new Exception("Payment can not be 0.")
+    else if(payment <= 0 ) throw new PaymentCannotBeZeroException
     //pass amounts into function
     else
     {
@@ -42,6 +45,7 @@ trait Calculations {
       case calculatedInterestPlusAmount if calculatedInterestPlusAmount  + amount < payment => (Double.NaN, Double.NaN)
       case _ => (amount + calculatedInterest- payment, calculatedInterest)
     }
+//    println(matchCalculatedInterest)
     matchCalculatedInterest
   }
 

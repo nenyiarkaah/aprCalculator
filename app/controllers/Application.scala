@@ -8,7 +8,7 @@ import play.api.data._
 import play.api.data.Forms._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.data.format.Formats._
-import play.api.libs.json.JsValue
+//import play.api.libs.json.JsValue
 import play.api.routing._
 import play.api.libs.json._
 import services._
@@ -19,9 +19,9 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
 
 
   def index = Action { implicit request =>
-    Ok(views.html.index(None, "", InterestForm))
+    Ok(views.html.index(None, "", interestForm))
   }
-  val InterestForm = Form(
+  val interestForm = Form(
     mapping(
       "inputAmount" -> of(doubleFormat),
       "inputInterest" -> of(doubleFormat)
@@ -29,7 +29,7 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     (calcData.apply)(calcData.unapply)
   )
 
-  val PaymentForm = Form(
+  val paymentForm = Form(
     mapping(
       "paymentAmount" -> of(doubleFormat),
       "paymentInterest" -> of(doubleFormat),
@@ -38,7 +38,7 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     (paymentData.apply)(paymentData.unapply)
   )
 
-  def processCalculator =  Action (parse.form(InterestForm)) { implicit request =>
+  def processCalculator =  Action (parse.form(interestForm)) { implicit request =>
 
     val body = request.body
     var message = "With an amount of " + body.amount + " at APR of " + body.interest + "% interest on payment will be."
@@ -50,7 +50,7 @@ class Application @Inject()(val messagesApi: MessagesApi) extends Controller wit
     Ok(json)
   }
 
-  def processPaymentPlan =  Action (parse.form(PaymentForm)) { implicit request =>
+  def processPaymentPlan =  Action (parse.form(paymentForm)) { implicit request =>
 
     val body = request.body
     var head = List[(Double, Double)]()
